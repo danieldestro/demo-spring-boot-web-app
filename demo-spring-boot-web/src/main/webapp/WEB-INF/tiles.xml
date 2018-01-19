@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE tiles-definitions PUBLIC  
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <definition name="__BASE__" template="/WEB-INF/views/templates/main.jsp">
+        <put-attribute name="header"        value="/WEB-INF/views/fragments/header.jsp" />
+        <put-attribute name="menu"          value="/WEB-INF/views/fragments/menu.jsp" />
+        <put-attribute name="body"          value="/WEB-INF/views/home.jsp" />
+        <put-attribute name="footer"        value="/WEB-INF/views/fragments/footer.jsp" />
+        <put-attribute name="controlbar"    value="/WEB-INF/views/fragments/controlbar.jsp" />
+    </definition>
+
+    <definition name="*" extends="__BASE__">
+        <put-attribute name="body"          value="/WEB-INF/views/{1}.jsp" />
+    </definition>
+
+    <definition name="*/*" extends="__BASE__">
+        <put-attribute name="body"          value="/WEB-INF/views/{1}/{2}.jsp" />
+    </definition>
+
+    <definition name="*/*/*" extends="__BASE__">
+        <put-attribute name="body"          value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+    </definition>
+
+    <!--
+    <definition name="dashboard" extends="mainLayout">
+        <put-attribute name="body" value="/WEB-INF/views/dashboard.jsp" />
+    </definition>
+    -->
+
+</tiles-definitions>

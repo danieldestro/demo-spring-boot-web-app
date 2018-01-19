@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+		<groupId>demo.springboot.app</groupId>
+		<artifactId>demo-spring-boot-web-app</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <name>demo-spring-boot-sso</name>
+    <artifactId>demo-spring-boot-sso</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!--Modules -->
+        <dependency>
+			<groupId>demo.springboot.app</groupId>
+            <artifactId>demo-spring-boot-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        
+        <!-- Web -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.ldap</groupId>
+            <artifactId>spring-ldap-core</artifactId>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <!-- Read SpringBoot configuration file for jdbc properties, 
+                which will be used by flyway plug-in -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- Recreate the Database -->
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <configuration>
+                    <sqlMigrationPrefix>Sso__</sqlMigrationPrefix>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

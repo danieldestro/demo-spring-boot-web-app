@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layouts/main">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<h1 layout:fragment="title">Greetings <small>Say Hello</small></h1>
+
+<div layout:fragment="content">
+
+<div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header">
+          <i class="fa fa-tv"></i>
+          <h3 class="box-title">Greeting</h3>
+        </div>
+        <div class="box-body pad table-responsive">
+        
+    <p th:text="'Hello, ' + ${name} + '!'" />
+
+        </div>
+        <!-- /.box -->
+      </div>
+    </div>
+    <!-- /.col -->
+</div>
+
+</div>
+</body>
+</html>

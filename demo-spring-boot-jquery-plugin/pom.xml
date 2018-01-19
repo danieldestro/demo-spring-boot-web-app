@@ -1,0 +1,187 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+		<groupId>demo.springboot.app</groupId>
+		<artifactId>demo-spring-boot-web-app</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <name>demo-spring-boot-jquery-plugin</name>
+    <artifactId>demo-spring-boot-jquery-plugin</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <compiled.name>casper-jquery.js</compiled.name>
+
+        <src.dir>${basedir}/src/main</src.dir>
+        <release.dir>${project.build.directory}/release</release.dir>
+        
+        <web.module.dir>../demo-spring-boot-web</web.module.dir>
+        <webapp.plugins.dir>${web.module.dir}/src/main/resources/static/plugins/casper</webapp.plugins.dir>
+
+        <jasmine.serverPort>8234</jasmine.serverPort>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <jquery.version>2.2.3</jquery.version>
+    </properties>
+
+    <dependencies>
+        <!-- Web JARs -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>${jquery.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.github.klieber</groupId>
+                    <artifactId>phantomjs-maven-plugin</artifactId>
+                    <version>0.7</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.searls</groupId>
+                    <artifactId>jasmine-maven-plugin</artifactId>
+                    <version>2.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.samaxes.maven</groupId>
+                    <artifactId>minify-maven-plugin</artifactId>
+                    <version>1.7.6</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.phasebash.jsdoc</groupId>
+                    <artifactId>jsdoc3-maven-plugin</artifactId>
+                    <version>1.2.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <!-- Concatenate and Minify CSS and JavaScript files -->
+            <plugin>
+                <groupId>com.samaxes.maven</groupId>
+                <artifactId>minify-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jsEngine>CLOSURE</jsEngine>
+                    <jsFinalFile>${compiled.name}</jsFinalFile>
+                    <jsSourceDir>javascript</jsSourceDir>
+                    <jsSourceIncludes>
+                        <jsSourceInclude>**</jsSourceInclude>
+                    </jsSourceIncludes>
+                    <jsSourceExcludes>
+                        <jsSourceExclude>**/*.min.js</jsSourceExclude>
+                    </jsSourceExcludes>
+                    <webappSourceDir>${src.dir}</webappSourceDir>
+                    <webappTargetDir>${release.dir}</webappTargetDir>
+                </configuration>
+            </plugin>
+            <!-- Run JavaScript Test Cases -->
+            <plugin>
+                <groupId>com.github.klieber</groupId>
+                <artifactId>phantomjs-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>install</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <version>1.9.2</version>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.searls</groupId>
+                <artifactId>jasmine-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
+                            <webDriverCapabilities>
+                                <capability>
+                                    <name>phantomjs.binary.path</name>
+                                    <value>${phantomjs.binary}</value>
+                                </capability>
+                            </webDriverCapabilities>
+                            <keepServerAlive>true</keepServerAlive>
+                            <jsSrcDir>${release.dir}</jsSrcDir>
+                            <sourceExcludes>
+                                <exclude>**/*.min.js</exclude>
+                            </sourceExcludes>
+                            <preloadSources>
+                                <source>webjars/jquery/${jquery.version}/jquery.js</source>
+                            </preloadSources>
+                            <junitXmlReportFileName>TEST-jasmine.xml</junitXmlReportFileName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <!-- Generate Documentation -->
+            <plugin>
+                <groupId>com.github.phasebash</groupId>
+                <artifactId>jsdoc3-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jsdoc3</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <recursive>true</recursive>
+                    <directoryRoots>
+                        <directoryRoot>${src.dir}/javascript</directoryRoot>
+                    </directoryRoots>
+                    <outputDirectory>${release.dir}/doc</outputDirectory>
+                </configuration>
+            </plugin>
+            
+            <!-- Copy distribution files -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <!-- here the phase you need -->
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${webapp.plugins.dir}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${release.dir}/javascript</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

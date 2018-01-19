@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>demo.springboot.app</groupId>
+    <artifactId>demo-spring-boot-web-app</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>demo-spring-boot-web-app</name>
+    <description>Demo Spring Boot Web App</description>
+
+    <modules>
+        <module>demo-spring-boot-core</module>
+        <module>demo-spring-boot-sso</module>
+        <module>demo-spring-boot-jquery-plugin</module>
+        <module>demo-spring-boot-web</module>
+    </modules>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.9.RELEASE</version>
+        <relativePath /> <!-- lookup parent from repository -->
+    </parent>
+
+    <scm>
+        <!--
+        <connection>scm:git:ssh://git@github.hpe.com/[myuser]/[myrepository].git</connection>
+        -->
+        <developerConnection>scm:git:[fetch=]https://github.hpe.com/[myuser]/[myrepository].git[push=]https://[myuser]:[mytoken]@github.hpe.com/[myuser]/[myrepository].git</developerConnection>
+        <connection>scm:git:https://github.hpe.com/[myuser]/[myrepository].git</connection>
+        <url>git@github.hpe.com:[myuser]/[myrepository].git</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>internal.repo</id>
+            <name>releases</name>
+            <url>http://repo1.core.hpecorp.net/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>internal.repo</id>
+            <name>snapshots</name>
+            <url>http://repo1.core.hpecorp.net/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <!-- Not needed, but having it makes the output of the versions maven plugin more readable. -->
+    <prerequisites>
+        <maven>3.5.0</maven>
+    </prerequisites>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        
+        <conf.properties.file>application-${app.instance}.properties</conf.properties.file>
+
+        <!-- library versions -->
+        <jaxb.version>2.3.0</jaxb.version>
+        <flyway.version>4.2.0</flyway.version>
+        <commons-lang3.version>3.5</commons-lang3.version>
+		<mysql.version>6.0.5</mysql.version>
+
+        <!-- maven plugin versions -->
+        <plugin.properties.version>1.0.0</plugin.properties.version>
+        <maven.failsafe.plugin.version>2.20.1</maven.failsafe.plugin.version>
+        <maven.release.plugin.version>2.5.3</maven.release.plugin.version>
+    </properties>
+
+    <dependencies>
+        <!--
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-ldap</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jersey</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.11</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ma.glasnost.orika</groupId>
+            <artifactId>orika-core</artifactId>
+            <version>1.5.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+		</dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-java8</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>${jaxb.version}</version>
+        </dependency>
+    </dependencies>
+    
+	<build>
+		<pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <executions>
+                        <execution>
+                            <id>regex-properties</id>
+                            <goals>
+                                <goal>regex-properties</goal>
+                            </goals>
+                            <configuration>
+                                <!-- read the argument 'spring.profiles.active' and split it to 2 variables -->
+                                <regexPropertySettings>
+                                    <!-- environment name -->
+                                    <regexPropertySetting>
+                                        <name>app.environment</name>
+                                        <value>${spring.profiles.active}</value>
+                                        <regex>([^,]+)(,)(.*)</regex>
+                                        <replacement>$1</replacement>
+                                        <failIfNoMatch>true</failIfNoMatch>
+                                    </regexPropertySetting>
+                                    <!-- instance name -->
+                                    <regexPropertySetting>
+                                        <name>app.instance</name>
+                                        <value>${spring.profiles.active}</value>
+                                        <regex>([^,]+)(,)(.*)</regex>
+                                        <replacement>$3</replacement>
+                                        <failIfNoMatch>true</failIfNoMatch>
+                                    </regexPropertySetting>
+                                </regexPropertySettings>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <configuration>
+                                <tasks>
+                                    <echo>APP ENVIRONMENT: ${app.environment}</echo>
+                                    <echo>APP INSTANCE...: ${app.instance}</echo>
+                                </tasks>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                
+                <!-- Reads in profile-configuration.properties for jdbc properties, which will be used by flyway plug-in -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>properties-maven-plugin</artifactId>
+                    <version>${plugin.properties.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>read-project-properties</goal>
+                            </goals>
+                            <configuration>
+                                <files>
+                                    <file>${basedir}/../demo-spring-boot-core/src/main/resources/config/${conf.properties.file}</file>
+                                </files>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- Recreate the Database -->
+                <plugin>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-maven-plugin</artifactId>
+                    <version>${flyway.version}</version>
+                    <!-- Database -->
+                    <dependencies>
+						<dependency>
+							<groupId>mysql</groupId>
+							<artifactId>mysql-connector-java</artifactId>
+							<version>${mysql.version}</version>
+						</dependency>
+                     </dependencies>
+                    <configuration>
+                        <url>${spring.datasource.url}</url>
+                        <user>${spring.datasource.username}</user>
+                        <password>${spring.datasource.password}</password>
+                        <skip>${demo.keep.database}</skip>
+                        <locations>
+                            <location>database/all</location>
+                            <location>database/${app.environment}</location>
+                            <location>database/${app.instance}</location>
+                        </locations>
+                    </configuration>
+                    <!--
+                    <executions>
+                        <execution>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>clean</goal>
+                                <goal>migrate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    -->
+                </plugin>
+
+                <!-- Unit tests -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven.failsafe.plugin.version}</version>
+                    <configuration>
+                        <!--
+                        <parallel>methods</parallel>
+                        <threadCount>5</threadCount>
+                        <groups>functest,perftest</groups>
+                        -->
+                    </configuration>
+                </plugin>
+
+                <!-- Integration tests -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${maven.failsafe.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>integration-test</id>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <!-- Failsafe plugin (Integration Tests) does not pass env vars to its forked vms by default -->
+                        <argLine>${failsafe.argLine}</argLine>
+                        <systemPropertyVariables>
+                            <spring.profiles.active>${spring.profiles.active}</spring.profiles.active>
+                        </systemPropertyVariables>
+                        <!--
+                        <parallel>methods</parallel>
+                        <threadCount>5</threadCount>
+                        -->
+                    </configuration>
+                </plugin>
+
+                <!-- Generates the project build number -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildnumber-maven-plugin</artifactId>
+                    <version>1.4</version>
+                    <executions>
+                        <execution>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>create</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <doCheck>false</doCheck>
+                        <doUpdate>false</doUpdate>
+                        <shortRevisionLength>10</shortRevisionLength>
+                        <format>{0,date,yyyy-MM-dd-HHmm}-{1}</format>
+                        <items>
+                            <item>timestamp</item>
+                            <item>scmVersion</item>
+                        </items>
+                        <!-- Version format in case the connection to SVN fails -->
+                        <revisiononscmfailure>
+                            <format>{0,date,yyyy.MM.dd}</format>
+                            <items>
+                                <item>timestamp</item>
+                            </items>
+                        </revisiononscmfailure>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+	</build>
+		
+    <profiles>
+        <profile>
+            <id>build-rc</id>
+			<build>
+                <pluginManagement>
+					<plugins>
+						<!-- Release/Deploy - Used to release a project with Maven, saving a lot of repetitive, manual work.
+							 Releasing a project is made in two steps: prepare and perform -->
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-release-plugin</artifactId>
+							<version>${maven.release.plugin.version}</version>
+							<configuration>
+                                <tagNameFormat>cac-@{project.version}</tagNameFormat>
+								<autoVersionSubmodules>true</autoVersionSubmodules>
+								<arguments>-Dspring.profiles.active=${profiles}</arguments>
+							</configuration>
+						</plugin>
+					</plugins>
+                </pluginManagement>
+			</build>
+        </profile>
+        
+        <!-- Will only drop and recreate the database only if the parameter '-Ddb.drop.create' is included in the build -->
+        <profile>
+            <id>flyway-clean-migrate</id>
+            <activation>
+              <property>
+                <name>db.drop.create</name>
+              </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <!-- Reads in profile-configuration.properties for jdbc properties, which will be used by flyway plug-in -->
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>properties-maven-plugin</artifactId>
+                        </plugin>
+        
+                        <!-- Clean and Migrate the Database -->
+                        <plugin>
+                            <groupId>org.flywaydb</groupId>
+                            <artifactId>flyway-maven-plugin</artifactId>
+                            <configuration>
+                                <skip>${demo.keep.database}</skip>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>clean</goal>
+                                        <goal>migrate</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin> 
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        
+        <!-- Default config attempt to migrate the database no property setting required -->
+        <profile>
+            <id>flyway-migrate</id>
+            <activation>
+              <property>
+                <name>!db.drop.create</name>
+              </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <!-- Reads in profile-configuration.properties for jdbc properties, which will be used by flyway plug-in -->
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>properties-maven-plugin</artifactId>
+                        </plugin>
+        
+                        <!-- Migrate the Database -->
+                        <plugin>
+                            <groupId>org.flywaydb</groupId>
+                            <artifactId>flyway-maven-plugin</artifactId>
+                            <configuration>
+                                <skip>false</skip>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>migrate</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
+</project>

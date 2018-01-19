@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+
+    <timestamp key="dateTimestamp" datePattern="yyyy-MM-dd" />
+    <property name="customPattern" value="%d{HH:mm:ss.SSS} %-5level %-40.40logger{5} [%thread] - %msg%n"/>
+
+    <if condition='"${spring.profiles.active}".contains("local") || "${log.output}".equals("console")'>
+        <then>
+            <appender name="APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+                <encoder>
+                    <pattern>${customPattern}</pattern>
+                </encoder>
+            </appender>
+        </then>
+        <else>
+            <appender name="APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <file>${LOG_DIR}/demo.log</file>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <!-- daily rollover -->
+                    <fileNamePattern>${LOG_DIR}/demo.%d{yyyy-MM-dd}.log</fileNamePattern>
+                    <!-- keep the log files from the last 30 days -->
+                    <maxHistory>30</maxHistory>
+                </rollingPolicy>
+                <encoder>
+                    <pattern>${customPattern}</pattern>
+                </encoder>
+            </appender>
+        </else>
+    </if>
+  
+    <logger name="demo.app" level="DEBUG" />
+
+    <!-- Enable 'showSql' in 'core-context.xml' and set the level here to 'TRACE' to see the SQL queries parameters -->
+    <logger name="org.hibernate" level="INFO" />
+    <logger name="org.hibernate.cfg.Settings" level="DEBUG" />
+    <logger name="org.hibernate.tool" level="WARN" />
+    <logger name="org.hibernate.jpa.internal.util.LogHelper" level="WARN" />
+
+    <logger name="org.springframework" level="INFO" />
+    <logger name="org.springframework.boot.autoconfigure" level="DEBUG" />
+    <logger name="org.springframework.web.client" level="DEBUG" />
+
+    <!-- Avoid docx4j sending not relevant info to the log -->
+    <logger name="org.docx4j" level="WARN" />
+
+    <!-- The connection pooling framework C3PO logs in debug mode by default and displays a number of FileNotFound 
+        stack traces, that they don't consider errors, but we still want to avoid. -->
+    <logger name="com.mchange.v2" level="INFO" />
+
+    <root level="INFO">
+        <appender-ref ref="APPENDER" />
+    </root>
+
+</configuration>
