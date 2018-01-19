@@ -62,7 +62,7 @@ public class ApplicationRestControllerIT extends BaseCrudRestIntegrationTest<App
         ApplicationVO vo = new ApplicationVO();
         vo.setName(name);
         vo.setDescription("Created by test automation");
-        vo.setUrl("http://www.hpe.com/");
+        vo.setUrl("http://www.demo.com/");
 
         ApplicationVO entity = testCreate(URI, vo, ApplicationVO.class).getBody();
 
@@ -77,7 +77,7 @@ public class ApplicationRestControllerIT extends BaseCrudRestIntegrationTest<App
         ApplicationVO vo = new ApplicationVO();
         vo.setName(name);
         vo.setDescription("Created by test automation");
-        vo.setUrl("http://www.hpe.com/");
+        vo.setUrl("http://www.demo.com/");
 
         testCreateErrorValidation(URI, vo, ApplicationVO.class);
     }
@@ -92,7 +92,7 @@ public class ApplicationRestControllerIT extends BaseCrudRestIntegrationTest<App
         vo.setId(id);
         vo.setName(name);
         vo.setDescription("Updated by test automation");
-        vo.setUrl("http://www.hpe.com/casper/updated/");
+        vo.setUrl("http://www.demo.com/casper/updated/");
 
         ApplicationVO entity = testUpdate(URI, vo, ApplicationVO.class).getBody();
 
@@ -114,7 +114,7 @@ public class ApplicationRestControllerIT extends BaseCrudRestIntegrationTest<App
         vo.setId(ID_NOT_FOUND);
         vo.setName(name);
         vo.setDescription("Updated by test automation");
-        vo.setUrl("http://www.hpe.com/casper/updated/");
+        vo.setUrl("http://www.demo.com/casper/updated/");
 
         ApplicationVO entity = testUpdate(URI, vo, ApplicationVO.class).getBody();
 
@@ -139,7 +139,7 @@ public class ApplicationRestControllerIT extends BaseCrudRestIntegrationTest<App
         vo.setId(ID);
         vo.setName(name);
         vo.setDescription("Updated by test automation");
-        vo.setUrl("http://www.hpe.com/casper/updated/");
+        vo.setUrl("http://www.demo.com/casper/updated/");
 
         testUpdateErrorValidation(URI, vo, ApplicationVO.class);
     }
@@ -150,7 +150,7 @@ public class ApplicationRestControllerIT extends BaseCrudRestIntegrationTest<App
         ApplicationVO vo = new ApplicationVO();
         vo.setName("Application to Delete");
         vo.setDescription("Created by test automation");
-        vo.setUrl("http://www.hpe.com/");
+        vo.setUrl("http://www.demo.com/");
 
         ApplicationVO entity = testCreate(URI, vo, ApplicationVO.class).getBody();
 

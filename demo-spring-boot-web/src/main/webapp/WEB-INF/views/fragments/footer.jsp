@@ -14,6 +14,6 @@
   <!-- Default to the left -->
   <strong>
   <span><fmt:message key="app.footer.copyright"/></span> 
-  <a href="http://www.hpe.com" target="_blank"><fmt:message key="company.name"/></a>
+  <a href="http://www.demo.com" target="_blank"><fmt:message key="company.name"/></a>
   </strong>
 </footer>

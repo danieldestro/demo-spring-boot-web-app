@@ -130,6 +130,7 @@ public class ApplicationServiceIT extends BaseIntegrationTest {
         assertNull(app);
     }
 
+    // TODO: FIX THIS TEST
     // @Test(expectedExceptions = DataIntegrityViolationException.class)
     public void delete_error_constraint() {
         int id = 1;

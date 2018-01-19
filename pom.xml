@@ -26,26 +26,13 @@
 
     <scm>
         <!--
-        <connection>scm:git:ssh://git@github.hpe.com/[myuser]/[myrepository].git</connection>
+        <connection>scm:git:ssh://git@github.com/[myuser]/[myrepository].git</connection>
         -->
-        <developerConnection>scm:git:[fetch=]https://github.hpe.com/[myuser]/[myrepository].git[push=]https://[myuser]:[mytoken]@github.hpe.com/[myuser]/[myrepository].git</developerConnection>
-        <connection>scm:git:https://github.hpe.com/[myuser]/[myrepository].git</connection>
-        <url>git@github.hpe.com:[myuser]/[myrepository].git</url>
+        <developerConnection>scm:git:[fetch=]https://github.com/[myuser]/[myrepository].git[push=]https://[myuser]:[mytoken]@github.com/[myuser]/[myrepository].git</developerConnection>
+        <connection>scm:git:https://github.com/[myuser]/[myrepository].git</connection>
+        <url>git@github.com:[myuser]/[myrepository].git</url>
         <tag>HEAD</tag>
     </scm>
-
-    <distributionManagement>
-        <repository>
-            <id>internal.repo</id>
-            <name>releases</name>
-            <url>http://repo1.core.hpecorp.net/nexus/content/repositories/releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>internal.repo</id>
-            <name>snapshots</name>
-            <url>http://repo1.core.hpecorp.net/nexus/content/repositories/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <!-- Not needed, but having it makes the output of the versions maven plugin more readable. -->
     <prerequisites>

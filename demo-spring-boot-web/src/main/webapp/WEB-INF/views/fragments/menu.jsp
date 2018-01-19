@@ -10,7 +10,7 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel">
         <div class="pull-left">
-            <img src="<c:url value="/img/hpe_logo.png"/>" alt="HPE" class="hidden-xs" />
+            <img src="<c:url value="/img/logo.png"/>" alt="DEMO" class="hidden-xs" />
         </div>
     </div>
 
