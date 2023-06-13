@@ -50,7 +50,7 @@
         <jaxb.version>2.3.0</jaxb.version>
         <flyway.version>4.2.0</flyway.version>
         <commons-lang3.version>3.5</commons-lang3.version>
-		<mysql.version>6.0.5</mysql.version>
+	<mysql.version>8.0.33</mysql.version>
 
         <!-- maven plugin versions -->
         <plugin.properties.version>1.0.0</plugin.properties.version>
@@ -147,11 +147,11 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.version}</version>
-		</dependency>
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>${mysql.version}</version>
+	</dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-java8</artifactId>
